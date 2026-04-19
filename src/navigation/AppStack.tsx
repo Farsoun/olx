@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import TabBar from './TabBar';
+import CarsScreen from '../screens/CarsScreen';
 
 export type RootStackParamList = {
   MainTabs: undefined;
@@ -17,12 +18,15 @@ const AppStack = () => {
             screenOptions={{
                 headerShown: false,
                 animation: 'slide_from_right',
-            }}
-        >
-        <Stack.Screen
-            name="MainTabs"
-            component={TabBar}
-        />
+            }}>
+            <Stack.Screen
+                name="MainTabs"
+                component={TabBar}
+            />
+            <Stack.Screen
+                name="Cars"
+                component={CarsScreen}
+            />
         </Stack.Navigator>
     );
 };
