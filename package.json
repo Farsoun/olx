@@ -2,6 +2,7 @@
   "name": "olx",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -13,7 +14,10 @@
     "@react-native/new-app-screen": "0.85.1",
     "@react-navigation/bottom-tabs": "^7.15.9",
     "@react-navigation/native-stack": "^7.14.11",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "i18next": "^26.0.6",
+    "node-fetch": "^3.3.2",
     "react": "19.2.3",
     "react-i18next": "^17.0.4",
     "react-native": "0.85.1",
@@ -47,5 +51,11 @@
   },
   "engines": {
     "node": ">= 22.11.0"
-  }
+  },
+  
+  "description": "Using Node v 20.20.2",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
