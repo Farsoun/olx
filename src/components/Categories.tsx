@@ -1,30 +1,85 @@
-import React from 'react';
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
-
-const DATA = [
-    { id: '1', title: 'Vehicles', icon: 'https://cdn-icons-png.flaticon.com/512/743/743922.png' },
-    { id: '2', title: 'Properties', icon: 'https://cdn-icons-png.flaticon.com/512/619/619153.png' },
-    { id: '3', title: 'Mobiles', icon: 'https://cdn-icons-png.flaticon.com/512/15/15874.png' },
-    { id: '4', title: 'Electronics', icon: 'https://cdn-icons-png.flaticon.com/512/1041/1041372.png' },
-    { id: '5', title: 'Furniture', icon: 'https://cdn-icons-png.flaticon.com/512/3082/3082030.png' },
-];
+import React, { useEffect, useState } from 'react';
+import {View, Text, StyleSheet, FlatList, Image, ActivityIndicator} from 'react-native';
 
 const Categories = () => {
+    const [categories, setCategories] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch('https://www.olx.com.lb/api/categories', {
+                headers: {
+                    'Accept': 'application/json',
+                    'User-Agent': 'Mozilla/5.0',
+                },
+            });
+
+            const data = await res.json();
+
+            console.log('API RESPONSE:', data);
+
+            // 🔥 handle ALL possible shapes
+            let list = [];
+
+            if (Array.isArray(data)) {
+                list = data;
+            } else if (data?.data) {
+                list = data.data;
+            } else if (data?.categories) {
+                list = data.categories;
+            } else if (data?.data?.categories) {
+                list = data.data.categories;
+            }
+
+            const formatted = list.map((item: any) => ({
+                id: String(item.id || item.category_id || Math.random()),
+                title: item.name || item.title || 'Category',
+                icon:
+                    item.icon ||
+                    item.image ||
+                    'https://cdn-icons-png.flaticon.com/512/743/743922.png',
+            }));
+
+            setCategories(formatted);
+        } catch (e) {
+            console.log('Categories error:', e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return <ActivityIndicator style={{ marginTop: 20 }} />;
+    }
+
+    if (categories.length === 0) {
+        return (
+            <View style={{ marginTop: 20 }}>
+                <Text style={{ textAlign: 'center' }}>No categories found</Text>
+            </View>
+        );
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>All categories</Text>
+
             <FlatList
-                data={DATA}
+                data={categories}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                <View style={styles.item}>
-                    <View style={styles.circle}>
-                    <Image source={{ uri: item.icon }} style={styles.icon} />
+                    <View style={styles.item}>
+                        <View style={styles.circle}>
+                            <Image source={{ uri: item.icon }} style={styles.icon} />
+                        </View>
+                        <Text style={styles.label}>{item.title}</Text>
                     </View>
-                    <Text style={styles.label}>{item.title}</Text>
-                </View>
                 )}
             />
         </View>
@@ -63,5 +118,6 @@ const styles = StyleSheet.create({
         marginTop: 6,
         fontSize: 12,
         textAlign: 'center',
+        maxWidth: 70
     },
 });

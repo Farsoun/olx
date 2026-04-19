@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Banner from '../components/Banner';
@@ -13,7 +12,6 @@ import RecentSearches from '../components/home/RecentSearches';
 import CardsTitle from '../components/home/CardsTitle';
 import PropertyCard from '../components/home/PropertyCard';
 import CarCard from '../components/home/CarsCard';
-
 
 import { RootStackParamList } from '../navigation/AppStack';
 
@@ -79,6 +77,7 @@ const HomeScreen = () => {
                 <SearchBar />
                 <Banner />
                 <Categories />
+
                 <RecentSearches
                     data={[
                         'kitten in Cats',
@@ -88,6 +87,7 @@ const HomeScreen = () => {
                         console.log('Search:', value);
                     }}
                 />
+
                 <CardsTitle
                     title="International Properties"
                     data={properties}
@@ -95,13 +95,13 @@ const HomeScreen = () => {
                     onSeeAll={() => console.log('See all properties')}
                 />
 
-                {/* Cars Section */}
                 <CardsTitle
                     title="Cars for Sale"
                     data={cars}
                     renderItem={({ item }) => <CarCard item={item} />}
                     onSeeAll={() => navigation.navigate('Cars')}
                 />
+
             </ScrollView>
         </SafeAreaView>
     );
