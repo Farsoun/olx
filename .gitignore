@@ -1,0 +1,94 @@
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Node / JS
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# =========================
+# React Native / Metro
+# =========================
+.expo/
+.expo-shared/
+.metro-health-check*
+*.bundle
+*.jsbundle
+
+# =========================
+# Android
+# =========================
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/*.iml
+android/.idea
+android/.cxx/
+*.keystore
+!debug.keystore
+
+# =========================
+# iOS
+# =========================
+ios/build/
+ios/Pods/
+ios/DerivedData/
+*.xcworkspace
+!default.xcworkspace
+*.xcuserstate
+xcuserdata/
+*.hmap
+*.ipa
+
+# =========================
+# CocoaPods
+# =========================
+/ios/Pods/
+/vendor/bundle/
+
+# =========================
+# Fastlane
+# =========================
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# =========================
+# Env / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Testing
+# =========================
+coverage/
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Misc
+# =========================
+*.swp
+*.lock
