@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
+import AccountScreen from '../screens/AccountScreen';
 
 // Dumy screens for demonstrating the tabs layout
 const ChatsScreen = () => <View style={styles.screen}><Text>Chats</Text></View>;
 const SellScreen = () => <View style={styles.screen}><Text>Sell</Text></View>;
 const MyAdsScreen = () => <View style={styles.screen}><Text>My Ads</Text></View>;
-const AccountScreen = () => <View style={styles.screen}><Text>Account</Text></View>;
 
 const Tab = createBottomTabNavigator();
 

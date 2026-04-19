@@ -6,6 +6,7 @@ export default {
         verified: 'موثق',
         elite: 'مميز',
         whatsapp: 'واتساب',
+        welcome: 'مرحبا'
     },
     ad: {
         year: 'السنة',

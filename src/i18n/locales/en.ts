@@ -6,6 +6,7 @@ export default {
         verified: 'Verified',
         elite: 'Elite',
         whatsapp: 'WhatsApp',
+        welcome: 'Welcome'
     },
     ad: {
         year: 'Year',
