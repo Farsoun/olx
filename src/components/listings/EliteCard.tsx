@@ -4,8 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Ad } from '../../types/ad';
 
 interface Props {
-  ad: Ad;
-  onPress?: () => void;
+    ad: Ad;
+    onPress?: () => void;
 }
 
 const EliteCard: React.FC<Props> = ({ ad, onPress }) => {
@@ -21,10 +21,10 @@ const EliteCard: React.FC<Props> = ({ ad, onPress }) => {
                 <Image source={{ uri: ad.image }} style={styles.image} />
 
                 {ad.isVerified && (
-                <View style={styles.verifiedBadge}>
-                    <Ionicons name="checkmark-circle" size={16} color="#4BB543" />
-                    <Text style={styles.verifiedText}>Verified</Text>
-                </View>
+                    <View style={styles.verifiedBadge}>
+                        <Ionicons name="checkmark-circle" size={16} color="#4BB543" />
+                        <Text style={styles.verifiedText}>Verified</Text>
+                    </View>
                 )}
 
                 <TouchableOpacity style={styles.favorite}>
@@ -34,11 +34,11 @@ const EliteCard: React.FC<Props> = ({ ad, onPress }) => {
 
             <View style={styles.content}>
                 <Text style={styles.price}>USD {ad.price.toLocaleString()}</Text>
+
                 <Text style={styles.title} numberOfLines={1}>
-                {ad.title}
+                    {ad.title}
                 </Text>
 
-                {/* Details Section */}
                 <View style={styles.row}>
                     <Text style={styles.meta}>📅 {ad.year}</Text>
                     <Text style={styles.meta}>🛣 {ad.mileage}</Text>
@@ -49,16 +49,16 @@ const EliteCard: React.FC<Props> = ({ ad, onPress }) => {
                 <Text style={styles.time}>{ad.time}</Text>
 
                 <View style={styles.actions}>
-                    <TouchableOpacity style={styles.whatsapp}>
+                    <TouchableOpacity style={[styles.whatsapp, styles.flex]}>
                         <Ionicons name="logo-whatsapp" size={18} color="#2BB741" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={[styles.button, styles.flex, styles.middle]}>
                         <Ionicons name="chatbubble-outline" size={16} />
                         <Text style={styles.buttonText}>Chat</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={[styles.button, styles.flex, styles.right]}>
                         <Ionicons name="call-outline" size={16} />
                         <Text style={styles.buttonText}>Call</Text>
                     </TouchableOpacity>
@@ -71,118 +71,134 @@ const EliteCard: React.FC<Props> = ({ ad, onPress }) => {
 export default EliteCard;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    marginBottom: 16,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#E5C36A',
-  },
+    container: {
+        backgroundColor: '#fff',
+        borderRadius: 7,
+        marginBottom: 16,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#E5C36A',
+        marginHorizontal: 10
+    },
 
-  eliteHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E5C36A',
-    padding: 10,
-  },
+    eliteHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#E5C36A',
+        padding: 10,
+    },
 
-  eliteText: {
-    marginLeft: 6,
-    fontWeight: '600',
-  },
+    eliteText: {
+        marginLeft: 6,
+        fontWeight: '600',
+    },
 
-  image: {
-    width: '100%',
-    height: 200,
-  },
+    image: {
+        width: '100%',
+        height: 200,
+    },
 
-  verifiedBadge: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    backgroundColor: '#fff',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+    verifiedBadge: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        backgroundColor: '#fff',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 
-  verifiedText: {
-    marginLeft: 4,
-    fontSize: 12,
-  },
+    verifiedText: {
+        marginLeft: 4,
+        fontSize: 12,
+    },
 
-  favorite: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    padding: 6,
-    borderRadius: 20,
-  },
+    favorite: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        padding: 6,
+        borderRadius: 20,
+    },
 
-  content: {
-    padding: 12,
-  },
+    content: {
+        padding: 12,
+    },
 
-  price: {
-    color: '#E4572E',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+    price: {
+        color: '#E4572E',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 
-  title: {
-    marginTop: 4,
-    fontSize: 14,
-    color: '#333',
-  },
+    title: {
+        marginTop: 4,
+        fontSize: 14,
+        color: '#333',
+    },
 
-  row: {
-    flexDirection: 'row',
-    marginTop: 6,
-    gap: 10,
-  },
+    row: {
+        flexDirection: 'row',
+        marginTop: 6,
+        gap: 10,
+    },
 
-  meta: {
-    fontSize: 12,
-    color: '#555',
-  },
+    meta: {
+        fontSize: 12,
+        color: '#555',
+    },
 
-  location: {
-    marginTop: 6,
-    color: '#777',
-  },
+    location: {
+        marginTop: 6,
+        color: '#777',
+    },
 
-  time: {
-    fontSize: 12,
-    color: '#aaa',
-  },
+    time: {
+        fontSize: 12,
+        color: '#aaa',
+    },
 
-  actions: {
-    flexDirection: 'row',
-    marginTop: 12,
-    justifyContent: 'space-between',
-  },
+    actions: {
+        flexDirection: 'row',
+        marginTop: 12,
+    },
 
-  whatsapp: {
-    backgroundColor: '#E8F5E9',
-    padding: 10,
-    borderRadius: 8,
-  },
+    flex: {
+        flex: 1,
+    },
 
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
+    whatsapp: {
+        backgroundColor: '#E8F5E9',
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginRight: 6,
+    },
 
-  buttonText: {
-    marginLeft: 6,
-  },
+    button: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 8,
+    },
+
+    middle: {
+        marginHorizontal: 3,
+    },
+
+    right: {
+        marginLeft: 6,
+    },
+
+    buttonText: {
+        marginLeft: 6,
+    },
 });
