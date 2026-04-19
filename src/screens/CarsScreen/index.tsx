@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    FlatList,
-    ActivityIndicator,
-    Text,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Text} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -51,35 +44,39 @@ const CarsScreen = () => {
     }, []);
 
     const loadAds = async () => {
-        try {
-            setLoading(true);
+    try {
+        setLoading(true)
 
-            const res = await fetchAds();
+        const res = await fetchAds({
+            category: '23',
+            from: 0,
+            size: 12,
+        })
 
-            const hits = res?.hits?.hits || [];
+        const hits = res?.hits?.hits ?? []
 
-            const mapped = hits.map((item: any, index: number) => ({
-                id: item._id ? `${item._id}-${index}` : `ad-${index}`,
-                image:
-                    item._source.images?.[0]?.url ||
-                    'https://via.placeholder.com/300',
-                price: item._source.price?.value || 0,
-                title: item._source.title,
-                year: item._source.car?.year || 0,
-                mileage: item._source.car?.mileage || 0,
-                fuel: item._source.car?.fuel || '',
-                location: item._source.location?.name || '',
-                time: item._source.created_at || '',
-                isVerified: item._source.is_verified,
-            }));
+        const mapped = hits.map((item: any, index: number) => ({
+            id: item._id ? `${item._id}-${index}` : `ad-${index}`,
+            image:
+                item._source?.images?.[0]?.url ||
+                'https://via.placeholder.com/300',
+            price: item._source?.price?.value ?? 0,
+            title: item._source?.title ?? '',
+            year: item._source?.car?.year ?? 0,
+            mileage: item._source?.car?.mileage ?? 0,
+            fuel: item._source?.car?.fuel ?? '',
+            location: item._source?.location?.name ?? '',
+            time: item._source?.created_at ?? '',
+            isVerified: item._source?.is_verified ?? false,
+        }))
 
-            setAds(mapped);
-        } catch (e) {
-            setAds([]);
-        } finally {
-            setLoading(false);
-        }
-    };
+        setAds(mapped)
+    } catch {
+        setAds([])
+    } finally {
+        setLoading(false)
+    }
+}
 
     const renderHeader = () => (
         <>

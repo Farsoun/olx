@@ -1,59 +1,114 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import cors from 'cors';
+import express from 'express'
+import cors from 'cors'
 
-const app = express();
+const app = express()
 
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
-const OLX_URL = 'https://search.mena.sector.run/_msearch';
+const ads = [
+    {
+        _id: '1',
+        _source: {
+            title: 'BMW 320i 2018',
+            price: { value: 18500 },
+            images: [{ url: 'https://picsum.photos/400?car1' }],
+            car: { year: 2018, mileage: 60000, fuel: 'Petrol' },
+            location: { name: 'Beirut', externalID: '0-1' },
+            category: { externalID: '23' },
+            created_at: '2 hours ago',
+            is_verified: true,
+        },
+    },
+    {
+        _id: '2',
+        _source: {
+            title: 'Mercedes C300 2020',
+            price: { value: 32000 },
+            images: [{ url: 'https://picsum.photos/400?car2' }],
+            car: { year: 2020, mileage: 30000, fuel: 'Hybrid' },
+            location: { name: 'Jounieh', externalID: '0-2' },
+            category: { externalID: '23' },
+            created_at: '5 hours ago',
+            is_verified: false,
+        },
+    },
+    {
+        _id: '3',
+        _source: {
+            title: 'Toyota Yaris 2016',
+            price: { value: 9000 },
+            images: [{ url: 'https://picsum.photos/400?car3' }],
+            car: { year: 2016, mileage: 90000, fuel: 'Petrol' },
+            location: { name: 'Tripoli', externalID: '0-3' },
+            category: { externalID: '23' },
+            created_at: '1 day ago',
+            is_verified: true,
+        },
+    },
+]
 
-app.post('/ads', async (req, res) => {
-    try {
-        console.log('REQUEST RECEIVED');
+app.post('/ads', (req, res) => {
+    const {
+        category,
+        location,
+        minPrice,
+        maxPrice,
+        search,
+        from = 0,
+        size = 12,
+    } = req.body || {}
 
-        const body =
-            JSON.stringify({ index: 'olx-lb-production-ads-en' }) +
-            '\n' +
-            JSON.stringify({
-                from: 0,
-                size: 12,
-                track_total_hits: true,
-                query: {
-                    match_all: {},
-                },
-                sort: [{ created_at: { order: 'desc' } }],
-            }) +
-            '\n';
+    let results = [...ads]
 
-        console.log('FETCHING FROM OLX...');
-
-        const response = await fetch(OLX_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-ndjson',
-                Accept: 'application/json',
-                Origin: 'https://www.olx.com.lb',
-                Referer: 'https://www.olx.com.lb/',
-                'User-Agent': 'Mozilla/5.0',
-            },
-            body,
-        });
-
-        const data = await response.json();
-
-        const hits = data.responses?.[0]?.hits?.hits || [];
-
-        console.log('ADS COUNT:', hits.length);
-
-        res.json(data.responses?.[0] || {});
-    } catch (e) {
-        console.log('SERVER ERROR:', e);
-        res.status(500).json({ error: 'Failed' });
+    if (category) {
+        results = results.filter(
+            (ad) => ad._source.category.externalID === category
+        )
     }
-});
+
+    if (location) {
+        results = results.filter(
+            (ad) => ad._source.location.externalID === location
+        )
+    }
+
+    if (minPrice != null) {
+        results = results.filter(
+            (ad) => ad._source.price.value >= minPrice
+        )
+    }
+
+    if (maxPrice != null) {
+        results = results.filter(
+            (ad) => ad._source.price.value <= maxPrice
+        )
+    }
+
+    if (search) {
+        results = results.filter((ad) =>
+            ad._source.title.toLowerCase().includes(search.toLowerCase())
+        )
+    }
+
+    const paginated = results.slice(from, from + size)
+
+    res.json({
+        hits: {
+            total: results.length,
+            hits: paginated,
+        },
+    })
+})
+
+app.get('/locations', (req, res) => {
+    res.json([
+        { name: 'Beirut', externalID: '0-1' },
+        { name: 'Jounieh', externalID: '0-2' },
+        { name: 'Tripoli', externalID: '0-3' },
+    ])
+})
 
 app.listen(3000, '0.0.0.0', () => {
-    console.log('Server running on http://0.0.0.0:3000');
-});
+    console.log('Server running on http://0.0.0.0:3000')
+})
